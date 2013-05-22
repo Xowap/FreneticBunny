@@ -15,10 +15,10 @@ $.fb.connected('email').done(function () {
 }).fail(function () {
 	console.log('The user did reject us!');
 });
+```
 
 It strongly relies on jQuery's promises: instead of giving instructions, you just ask the library to guarantee a certain
 state, and everything else is handled automatically.
-```
 
 Licence
 -------
