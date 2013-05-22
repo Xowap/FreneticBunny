@@ -7,6 +7,19 @@ Introduction
 Frennetic Bunny is a Facebook helper for jQuery. It was made out of frustration trying to connect a user within a
 Facebook application.
 
+The goal was to make Facebook login & permissions management as simple as this:
+
+```javascript
+$.fb.connected('email').done(function () {
+	// Do something useful here now that your user is connected
+}).fail(function () {
+	console.log('The user did reject us!');
+});
+
+It strongly relies on jQuery's promises: instead of giving instructions, you just ask the library to guarantee a certain
+state, and everything else is handled automatically.
+```
+
 Licence
 -------
 
