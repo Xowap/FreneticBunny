@@ -31,6 +31,40 @@
         };
     }
 
+    function FBApiRequest(path, args) {
+        var handle_response;
+
+        function AjaxRequest(url) {
+            this.run = function () {
+                var promise = new $.Deferred();
+                $.ajax(url).done(handle_response(promise));
+                return promise;
+            };
+        }
+
+        handle_response = function (promise) {
+            return function (response) {
+                var data = response.data, next = null;
+
+                if (response.paging && response.paging.next) {
+                    next = new AjaxRequest(response.paging.next);
+                }
+
+                promise.resolve(data, next);
+            };
+        };
+
+        this.run = function () {
+            var promise = new $.Deferred();
+
+            $.fb.ready(function () {
+                FB.api(path, args, handle_response(promise));
+            });
+
+            return promise;
+        };
+    }
+
     function FBHelper() {
         var self = this,
 
@@ -220,6 +254,10 @@
             }));
 
             form.submit();
+        };
+
+        this.api = function (path, args) {
+            return new FBApiRequest(path, args);
         };
     }
 
