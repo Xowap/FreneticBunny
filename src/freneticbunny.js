@@ -256,6 +256,20 @@
             form.submit();
         };
 
+        this.redirect_to_canvas = function (params) {
+            var url = settings.canvasUrl;
+
+            if (params !== undefined) {
+                url += '?' + $.param(params);
+            }
+
+            if (window.top) {
+                window.top.location = url;
+            } else {
+                window.location = url;
+            }
+        };
+
         this.api = function (path, args) {
             return new FBApiRequest(path, args);
         };
